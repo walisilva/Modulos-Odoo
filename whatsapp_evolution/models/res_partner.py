@@ -14,6 +14,6 @@ class ResPartner(models.Model):
             'target': 'new',
             'context': {
                 'default_partner_id': self.id,
-                'default_phone': self.mobile or self.phone or '',
+                'default_phone': self.phone or '',
             },
         }

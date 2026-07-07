@@ -9,7 +9,7 @@
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
                 <button name="action_open_whatsapp_wizard" type="object"
                         class="oe_stat_button" icon="fa-whatsapp"
-                        invisible="not mobile and not phone">
+                        invisible="not phone">
                     <div class="o_stat_info">
                         <span class="o_stat_text">Enviar</span>
                         <span class="o_stat_text">WhatsApp</span>
