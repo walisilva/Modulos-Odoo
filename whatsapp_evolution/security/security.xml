@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sem grupo customizado por enquanto: configuração fica restrita ao
+         grupo padrão de Administração (base.group_system) via menu e ACL;
+         instâncias, envio e histórico ficam liberados para usuários internos
+         (base.group_user). -->
+</odoo>

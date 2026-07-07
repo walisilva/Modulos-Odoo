@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_evolution_instance_form" model="ir.ui.view">
+        <field name="name">evolution.instance.form</field>
+        <field name="model">evolution.instance</field>
+        <field name="arch" type="xml">
+            <form string="Instância WhatsApp">
+                <header>
+                    <button name="action_create_instance" type="object"
+                            string="Criar instância na Evolution" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_refresh_qrcode" type="object"
+                            string="Atualizar QR Code" class="btn-secondary"
+                            invisible="state not in ('connecting', 'closed')"/>
+                    <button name="action_check_status" type="object"
+                            string="Verificar status" class="btn-secondary"
+                            invisible="state == 'draft'"/>
+                    <button name="action_disconnect" type="object"
+                            string="Desconectar" class="btn-secondary"
+                            invisible="state != 'open'"/>
+                    <button name="action_delete_instance" type="object"
+                            string="Excluir na Evolution" class="btn-danger"
+                            invisible="state == 'draft'"
+                            confirm="Isso desconecta e apaga a instância na Evolution API. Confirma?"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,connecting,open"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="config_id"/>
+                            <field name="phone_number"/>
+                            <field name="last_checked"/>
+                        </group>
+                        <group>
+                            <field name="qrcode_image" widget="image"
+                                   invisible="not qrcode_image"
+                                   options="{'size': [256, 256]}"/>
+                            <div invisible="state != 'connecting' or qrcode_image"
+                                 class="text-muted">
+                                Clique em "Atualizar QR Code" para gerar o código e escanear
+                                no WhatsApp (Aparelhos conectados &gt; Conectar um aparelho).
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_evolution_instance_list" model="ir.ui.view">
+        <field name="name">evolution.instance.list</field>
+        <field name="model">evolution.instance</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="config_id"/>
+                <field name="state"/>
+                <field name="phone_number"/>
+                <field name="last_checked"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_evolution_instance" model="ir.actions.act_window">
+        <field name="name">Números de WhatsApp</field>
+        <field name="res_model">evolution.instance</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crie um número de WhatsApp
+            </p>
+            <p>
+                Cada instância representa um número de WhatsApp conectado via Evolution API.
+            </p>
+        </field>
+    </record>
+
+</odoo>

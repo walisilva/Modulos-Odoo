@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_evolution_config_system,evolution.config.system,model_evolution_config,base.group_system,1,1,1,1
+access_evolution_instance_user,evolution.instance.user,model_evolution_instance,base.group_user,1,1,1,0
+access_evolution_instance_system,evolution.instance.system,model_evolution_instance,base.group_system,1,1,1,1
+access_whatsapp_message_log_user,whatsapp.message.log.user,model_whatsapp_message_log,base.group_user,1,1,1,0
+access_whatsapp_send_wizard_user,whatsapp.send.wizard.user,model_whatsapp_send_wizard,base.group_user,1,1,1,1

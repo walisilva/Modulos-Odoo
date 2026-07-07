@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_whatsapp_root" name="WhatsApp" sequence="90"/>
+
+    <menuitem id="menu_whatsapp_instances" name="Números"
+              parent="menu_whatsapp_root" action="action_evolution_instance" sequence="10"/>
+
+    <menuitem id="menu_whatsapp_log" name="Mensagens Enviadas"
+              parent="menu_whatsapp_root" action="action_whatsapp_message_log" sequence="20"/>
+
+    <menuitem id="menu_whatsapp_config" name="Configuração"
+              parent="menu_whatsapp_root" action="action_evolution_config" sequence="30"
+              groups="base.group_system"/>
+
+</odoo>
