@@ -19,7 +19,6 @@ Integração com a Evolution API (https://github.com/EvolutionAPI/evolution-api)
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
-        'data/evolution_config_data.xml',
         'views/evolution_config_views.xml',
         'views/evolution_instance_views.xml',
         'views/whatsapp_message_log_views.xml',

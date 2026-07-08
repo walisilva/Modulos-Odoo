@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Heranca do formulario nativo de fleet.vehicle.
+        Adiciona:
+          - Smart Button (stat button) com contagem de locacoes
+          - Campo leasing_status
+    -->
+    <record id="view_vehicle_form_fleet_leasing" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form.fleet.leasing</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart Button no header -->
+            <xpath expr="//header" position="inside">
+                <button name="%(action_sale_order_fleet_leasing)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-file-text-o"
+                        context="{'search_default_vehicle_id': active_id}">
+                    <div class="o_stat_info">
+                        <field name="leasing_order_count" class="o_stat_value"/>
+                        <span class="o_stat_text">Locacoes</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!-- Status de locacao no grupo de informacoes -->
+            <xpath expr="//field[@name='license_plate']/.." position="after">
+                <group string="Locacao">
+                    <field name="leasing_status" widget="badge"
+                           decoration-success="leasing_status == 'available'"
+                           decoration-warning="leasing_status == 'leased'"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!--
+        Acao de janela para filtrar locacoes do veiculo
+    -->
+    <record id="action_sale_order_fleet_leasing" model="ir.actions.act_window">
+        <field name="name">Contratos de Locacao</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('vehicle_id', '=', active_id)]</field>
+        <field name="context">{'search_default_vehicle_id': active_id}</field>
+        <field name="help" type="html">
+            <p>Lista os contratos de locacao deste veiculo.</p>
+        </field>
+    </record>
+
+</odoo>
