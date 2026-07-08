@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_fleet_leasing_vehicle_sale_order,fleet.leasing.vehicle.sale.order,sale.model_sale_order,,1,1,1,1
