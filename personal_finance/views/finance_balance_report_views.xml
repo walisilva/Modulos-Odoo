@@ -7,10 +7,8 @@
             <search string="Buscar saldo">
                 <filter string="Este ano" name="thisyear" domain="[('year', '=', time.strftime('%%Y'))]" help="Saldo do ano atual"/>
                 <separator/>
-                <group expand="0" string="Agrupar por">
-                    <filter string="Ano" name="group_year" domain="[]" context="{'group_by': 'year'}"/>
-                    <filter string="Mês" name="group_month" domain="[]" context="{'group_by': 'month'}"/>
-                </group>
+                <filter string="Ano" name="group_year" context="{'group_by': 'year'}"/>
+                <filter string="Mês" name="group_month" context="{'group_by': 'month'}"/>
             </search>
         </field>
     </record>

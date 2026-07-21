@@ -33,11 +33,9 @@
                     domain="[('date','&gt;=', time.strftime('%%Y-01-01')),('date','&lt;=',time.strftime('%%Y-12-31'))]"
                     help="Lançamentos do ano atual"/>
                 <separator/>
-                <group expand="0" string="Agrupar por">
-                    <filter string="Categoria" name="group_category" domain="[]" context="{'group_by': 'category_id'}"/>
-                    <filter string="Estado" name="group_state" domain="[]" context="{'group_by': 'state'}"/>
-                    <filter string="Origem" name="group_source" domain="[]" context="{'group_by': 'source'}"/>
-                </group>
+                <filter string="Categoria" name="group_category" context="{'group_by': 'category_id'}"/>
+                <filter string="Estado" name="group_state" context="{'group_by': 'state'}"/>
+                <filter string="Origem" name="group_source" context="{'group_by': 'source'}"/>
             </search>
         </field>
     </record>
