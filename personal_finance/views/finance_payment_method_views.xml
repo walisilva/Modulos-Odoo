@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_personal_finance_payment_method_list" model="ir.ui.view">
+        <field name="name">personal.finance.payment.method.list</field>
+        <field name="model">personal.finance.payment.method</field>
+        <field name="arch" type="xml">
+            <list editable="top">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_personal_finance_payment_methods" model="ir.actions.act_window">
+        <field name="name">Formas de Pagamento</field>
+        <field name="res_model">personal.finance.payment.method</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

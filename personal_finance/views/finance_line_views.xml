@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_personal_finance_line_list" model="ir.ui.view">
+        <field name="name">personal.finance.line.list</field>
+        <field name="model">personal.finance.line</field>
+        <field name="arch" type="xml">
+            <list editable="top" decoration-info="state=='new'" decoration-muted="state=='cancelled'">
+                <field name="date"/>
+                <field name="description"/>
+                <field name="amount" sum="Total"/>
+                <field name="account_id"/>
+                <field name="category_id"/>
+                <field name="card_id"/>
+                <field name="payment_method_id"/>
+                <field name="state"/>
+                <field name="source"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_personal_finance_line_search" model="ir.ui.view">
+        <field name="name">personal.finance.line.search</field>
+        <field name="model">personal.finance.line</field>
+        <field name="arch" type="xml">
+            <search string="Buscar lançamentos">
+                <field name="description" filter_domain="[('description', 'ilike', self)]"/>
+                <field name="account_id" string="Conta"/>
+                <field name="category_id" string="Categoria"/>
+                <field name="card_id" string="Cartão"/>
+                <field name="payment_method_id" string="Forma de pagamento"/>
+                <filter string="Sem categoria" name="uncategorized" domain="[('category_id', '=', False)]"/>
+                <filter string="Este mês" name="thismonth"
+                    domain="[('date','&lt;=',(context_today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('date','&gt;=',(context_today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]"
+                    help="Lançamentos do mês atual"/>
+                <filter string="Este ano" name="thisyear"
+                    domain="[('date','&gt;=', time.strftime('%%Y-01-01')),('date','&lt;=',time.strftime('%%Y-12-31'))]"
+                    help="Lançamentos do ano atual"/>
+                <separator/>
+                <filter string="Conta" name="group_account" context="{'group_by': 'account_id'}"/>
+                <filter string="Categoria" name="group_category" context="{'group_by': 'category_id'}"/>
+                <filter string="Cartão" name="group_card" context="{'group_by': 'card_id'}"/>
+                <filter string="Estado" name="group_state" context="{'group_by': 'state'}"/>
+                <filter string="Origem" name="group_source" context="{'group_by': 'source'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_personal_finance_lines_uncategorized" model="ir.actions.act_window">
+        <field name="name">Não Categorizados</field>
+        <field name="res_model">personal.finance.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('category_id', '=', False)]</field>
+        <field name="search_view_id" ref="view_personal_finance_line_search"/>
+    </record>
+
+    <record id="action_personal_finance_lines_all" model="ir.actions.act_window">
+        <field name="name">Todos os Lançamentos</field>
+        <field name="res_model">personal.finance.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_personal_finance_line_search"/>
+    </record>
+
+    <!-- Ação contextual: aplicar categoria (e opcionalmente salvar como regra) a lançamentos selecionados -->
+    <record id="action_finance_set_category_wizard" model="ir.actions.act_window">
+        <field name="name">Definir categoria</field>
+        <field name="res_model">personal.finance.set.category.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_personal_finance_line"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+    <!-- Relatórios: sintético (pivot), gráfico e analítico (lista) na mesma tela -->
+    <record id="view_personal_finance_line_pivot" model="ir.ui.view">
+        <field name="name">personal.finance.line.pivot</field>
+        <field name="model">personal.finance.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Relatório de lançamentos">
+                <field name="category_id" type="row"/>
+                <field name="date" interval="month" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_personal_finance_line_graph" model="ir.ui.view">
+        <field name="name">personal.finance.line.graph</field>
+        <field name="model">personal.finance.line</field>
+        <field name="arch" type="xml">
+            <graph string="Relatório de lançamentos" type="bar">
+                <field name="date" interval="month"/>
+                <field name="amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_personal_finance_lines_report" model="ir.actions.act_window">
+        <field name="name">Relatórios</field>
+        <field name="res_model">personal.finance.line</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="domain">[('category_id.category_type', '!=', 'neutral')]</field>
+        <field name="search_view_id" ref="view_personal_finance_line_search"/>
+        <field name="context">{'search_default_thisyear': 1}</field>
+    </record>
+</odoo>
