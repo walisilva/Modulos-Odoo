@@ -121,11 +121,16 @@ zero para a API do Odoo 19 (não é port de módulo de versão antiga).
 2. Importe um extrato: `Lançamentos > Importar OFX` > escolha a conta e o
    arquivo `.ofx` > Importar.
 3. Revise o que ficou sem categoria em `Lançamentos > Não Categorizados` —
-   selecione uma ou mais linhas, use a ação "Definir categoria" (aparece no
-   menu de ações da lista) e, se quiser que a próxima importação já
-   reconheça descrições parecidas, preencha "Salvar como regra" (vem
-   pré-preenchido com a descrição quando só uma linha está selecionada).
-4. Acompanhe em `Relatórios > Relatórios`.
+   clique no botão **"Categorizar"** de cada linha (abre um formulário
+   rápido já com um padrão de regra sugerido, editável, no campo "Salvar
+   como regra"). Pra categorizar várias linhas parecidas de uma vez,
+   selecione todas e use a ação "Definir categoria" no menu de ações (⚙)
+   da lista — mesmo formulário, aplicado em lote.
+4. Use o filtro **"Sem Padrões de Importação"** (na busca, junto com "Sem
+   categoria") pra achar depois lançamentos que foram categorizados sem
+   criar uma regra (ex: editados direto em "Todos os Lançamentos") — assim
+   dá pra voltar e completar a regra quando quiser.
+5. Acompanhe em `Relatórios > Relatórios`.
 
 ### Limitações conhecidas
 
