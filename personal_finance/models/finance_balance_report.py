@@ -24,11 +24,11 @@ class PersonalFinanceBalanceReport(models.Model):
                         EXTRACT(year FROM pfl.date)::int AS year,
                         EXTRACT(month FROM pfl.date)::int AS month,
                         SUM(SUM(pfl.credit - pfl.debit))
-                            OVER (PARTITION BY pfa.name ORDER BY EXTRACT(year FROM pfl.date), EXTRACT(month FROM pfl.date))
+                            OVER (PARTITION BY pfa.name ORDER BY EXTRACT(year FROM pfl.date)::int, EXTRACT(month FROM pfl.date)::int)
                             AS balance
                     FROM personal_finance_line pfl
                     INNER JOIN personal_finance_account pfa ON pfa.id = pfl.account_id
-                    GROUP BY pfa.name, year, month
+                    GROUP BY pfa.name, EXTRACT(year FROM pfl.date)::int, EXTRACT(month FROM pfl.date)::int
                 ) grouped
             )
         """ % self._table)
