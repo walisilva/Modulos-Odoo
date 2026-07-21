@@ -30,3 +30,4 @@ class PersonalFinanceSetCategoryWizard(models.TransientModel):
         lines.write({'category_id': self.category_id.id})
         if self.rule_pattern:
             self.env['personal.finance.category.rule']._upsert(self.rule_pattern, self.category_id.id)
+        return True
