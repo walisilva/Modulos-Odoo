@@ -18,9 +18,12 @@ class PersonalFinanceSetCategoryWizard(models.TransientModel):
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
         active_ids = self.env.context.get('active_ids') or []
-        if 'rule_pattern' in fields_list and len(active_ids) == 1:
+        if len(active_ids) == 1:
             line = self.env['personal.finance.line'].browse(active_ids[0])
-            res['rule_pattern'] = line.description
+            if 'rule_pattern' in fields_list:
+                res['rule_pattern'] = line.description
+            if 'category_id' in fields_list and line.category_id:
+                res['category_id'] = line.category_id.id
         return res
 
     def action_set_category(self):
