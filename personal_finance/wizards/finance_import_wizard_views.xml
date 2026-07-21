@@ -15,9 +15,9 @@
                     Formato esperado (separado por ";", uma linha por lançamento):<br/>
                     data (AAAA-MM-DD);descrição;referência;conciliado (1/vazio);débito;crédito
                 </div>
-                <group col="1" invisible="state != 'error'">
-                    <label string="Não foi possível importar o arquivo. Erros encontrados:"/>
-                </group>
+                <div invisible="state != 'error'" class="o_form_label">
+                    Não foi possível importar o arquivo. Erros encontrados:
+                </div>
                 <group col="1" invisible="not message">
                     <field name="message" readonly="1" nolabel="1"/>
                 </group>
