@@ -7,7 +7,8 @@
             <list editable="top" decoration-info="state=='new'" decoration-muted="state=='cancelled'">
                 <field name="date"/>
                 <field name="description"/>
-                <field name="amount" sum="Total"/>
+                <field name="income" sum="Total entradas"/>
+                <field name="expense" sum="Total saídas"/>
                 <field name="account_id"/>
                 <field name="category_id"/>
                 <field name="card_id"/>
@@ -79,6 +80,8 @@
                 <field name="category_id" type="row"/>
                 <field name="date" interval="month" type="col"/>
                 <field name="amount" type="measure"/>
+                <field name="income" type="measure"/>
+                <field name="expense" type="measure"/>
             </pivot>
         </field>
     </record>

@@ -63,10 +63,12 @@ class PersonalFinanceOfxImportWizard(models.TransientModel):
             if fitid and fitid in existing_fitids:
                 skipped += 1
                 continue
+            trnamt = float(txn.trnamt)
             vals_list.append({
                 'date': txn.dtposted.date(),
                 'description': (txn.memo or txn.name or '').strip() or 'Sem descrição',
-                'amount': float(txn.trnamt),
+                'income': trnamt if trnamt > 0 else 0.0,
+                'expense': -trnamt if trnamt < 0 else 0.0,
                 'account_id': account.id,
                 'source': 'ofx',
                 'ofx_fitid': fitid,
