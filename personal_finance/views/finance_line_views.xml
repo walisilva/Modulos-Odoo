@@ -73,7 +73,7 @@
             <pivot string="Relatório de lançamentos">
                 <field name="category_id" type="row"/>
                 <field name="account_id" type="col"/>
-                <field name="date:month" type="col"/>
+                <field name="date" interval="month" type="col"/>
                 <field name="debit" type="measure"/>
                 <field name="credit" type="measure"/>
                 <field name="balance" type="measure"/>
