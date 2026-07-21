@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_personal_finance_root" name="Finanças Pessoais" sequence="70"/>
+
+    <menuitem id="menu_personal_finance_lines" name="Lançamentos" parent="menu_personal_finance_root" sequence="1"/>
+    <menuitem id="menu_personal_finance_reporting" name="Relatórios" parent="menu_personal_finance_root" sequence="2"/>
+    <menuitem id="menu_personal_finance_configuration" name="Cadastros" parent="menu_personal_finance_root" sequence="3"/>
+
+    <menuitem id="menu_personal_finance_lines_uncategorized" name="Não Categorizados"
+        parent="menu_personal_finance_lines" action="action_personal_finance_lines_uncategorized" sequence="1"/>
+    <menuitem id="menu_personal_finance_lines_all" name="Todos os Lançamentos"
+        parent="menu_personal_finance_lines" action="action_personal_finance_lines_all" sequence="2"/>
+    <menuitem id="menu_personal_finance_ofx_import" name="Importar OFX"
+        parent="menu_personal_finance_lines" action="action_personal_finance_ofx_import_wizard" sequence="3"/>
+
+    <menuitem id="menu_personal_finance_lines_report" name="Relatórios"
+        parent="menu_personal_finance_reporting" action="action_personal_finance_lines_report" sequence="1"/>
+    <menuitem id="menu_personal_finance_balance_report" name="Evolução do Saldo"
+        parent="menu_personal_finance_reporting" action="action_personal_finance_balance_report" sequence="2"/>
+
+    <menuitem id="menu_personal_finance_accounts" name="Contas"
+        parent="menu_personal_finance_configuration" action="action_personal_finance_accounts" sequence="1"/>
+    <menuitem id="menu_personal_finance_banks" name="Bancos"
+        parent="menu_personal_finance_configuration" action="action_personal_finance_banks" sequence="2"/>
+    <menuitem id="menu_personal_finance_cards" name="Cartões"
+        parent="menu_personal_finance_configuration" action="action_personal_finance_cards" sequence="3"/>
+    <menuitem id="menu_personal_finance_payment_methods" name="Formas de Pagamento"
+        parent="menu_personal_finance_configuration" action="action_personal_finance_payment_methods" sequence="4"/>
+    <menuitem id="menu_personal_finance_categories" name="Categorias"
+        parent="menu_personal_finance_configuration" action="action_personal_finance_categories" sequence="5"/>
+    <menuitem id="menu_personal_finance_category_rules" name="Regras de Categorização"
+        parent="menu_personal_finance_configuration" action="action_personal_finance_category_rules" sequence="6"/>
+</odoo>

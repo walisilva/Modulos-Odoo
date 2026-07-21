@@ -6,6 +6,7 @@ repositório, no formato padrão de addon Odoo.
 | Módulo | Descrição |
 |---|---|
 | [`whatsapp_evolution/`](./whatsapp_evolution) | Envio de mensagens WhatsApp para contatos via [Evolution API](https://github.com/EvolutionAPI/evolution-api). |
+| [`personal_finance/`](./personal_finance) | Controle de despesas/receitas pessoais com importação de extrato OFX, categorização automática e relatórios. |
 
 ---
 
@@ -58,6 +59,83 @@ registro com:
   clientes nem confirmações de entrega/leitura
 - O número de telefone da instância não é preenchido automaticamente após
   conectar; pode editar manualmente no registro da instância
+
+### Licença
+
+LGPL-3
+
+---
+
+## personal_finance
+
+Controle de despesas e receitas pessoais/domésticas, independente do fluxo
+corporativo de reembolso (`hr_expense`) e do app Accounting — construído do
+zero para a API do Odoo 19 (não é port de módulo de versão antiga).
+
+### O que faz
+
+- **Cadastros**: bancos, formas de pagamento, cartões de crédito (etiqueta
+  informativa com dia de vencimento — sem modelo de fatura), contas com
+  saldo calculado (atual, fim do mês, fim do mês seguinte, conciliado).
+- **Categorias** hierárquicas, com tipo (despesa/receita/neutro — "neutro"
+  cobre transferência entre contas próprias/estorno, fica fora dos totais
+  de despesa/receita nos relatórios).
+- **Lançamentos** com Entrada e Saída como campos separados (sempre
+  positivos, como um extrato bancário — sem sinal de menos), calculados
+  automaticamente na importação a partir do valor do extrato.
+- **Importação de extrato OFX**: `Lançamentos > Importar OFX`, escolhe a
+  conta, sobe o arquivo. Deduplica automaticamente por FITID (não duplica
+  se reimportar um período sobreposto), separa entrada/saída automaticamente
+  e categoriza automaticamente por regra de padrão de texto.
+- **Regras de categorização** (`Cadastros > Regras de Categorização`):
+  padrão de texto → categoria. Se mais de uma regra combinar com a
+  descrição, vence a mais específica (padrão mais longo). Também são
+  criadas/atualizadas automaticamente ao categorizar um lançamento pela
+  tela "Não Categorizados" com a opção "Salvar como regra" preenchida —
+  assim a próxima importação já reconhece.
+- **Relatórios**: uma única tela (`Relatórios > Relatórios`) alternando
+  entre sintético (tabela dinâmica por categoria/mês), gráfico (barra,
+  linha ou pizza — agrupado por categoria e mês, então dá pra ver tanto a
+  fatia de cada categoria no total quanto a evolução mês a mês) e analítico
+  (lista detalhada), usando os view switchers nativos do Odoo. Mais um
+  relatório de evolução de saldo por conta/mês.
+
+### Requisitos
+
+- Odoo 19
+- Biblioteca Python [`ofxtools`](https://github.com/csingley/ofxtools)
+  (**não vem instalada por padrão** — ver "Instalação" abaixo)
+
+### Instalação
+
+1. Copie a pasta `personal_finance` para o addons path do seu Odoo.
+2. Instale a dependência Python no ambiente do Odoo:
+   `pip install ofxtools` (ou, num Dockerfile, adicione
+   `RUN pip install --break-system-packages ofxtools` antes do `ENTRYPOINT`).
+3. Em Ajustes > Apps, clique em "Atualizar lista de apps".
+4. Procure por "Finanças Pessoais" e instale.
+
+### Como usar
+
+1. Cadastre ao menos um banco e uma conta em `Cadastros`.
+2. Importe um extrato: `Lançamentos > Importar OFX` > escolha a conta e o
+   arquivo `.ofx` > Importar.
+3. Revise o que ficou sem categoria em `Lançamentos > Não Categorizados` —
+   selecione uma ou mais linhas, use a ação "Definir categoria" (aparece no
+   menu de ações da lista) e, se quiser que a próxima importação já
+   reconheça descrições parecidas, preencha "Salvar como regra" (vem
+   pré-preenchido com a descrição quando só uma linha está selecionada).
+4. Acompanhe em `Relatórios > Relatórios`.
+
+### Limitações conhecidas
+
+- Cartão de crédito é só uma etiqueta informativa (sem fatura mensal,
+  fechamento ou geração automática de pagamento na conta).
+- Sem lançamentos parcelados ou recorrentes automáticos.
+- Sem orçamento (limite de gasto por categoria/mês).
+- Importa um extrato OFX por vez, um arquivo = uma conta (não processa
+  arquivos com mais de uma conta dentro).
+- Sem importação de fatura de cartão em PDF.
 
 ### Licença
 

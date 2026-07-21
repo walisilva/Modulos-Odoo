@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_personal_finance_account_list" model="ir.ui.view">
+        <field name="name">personal.finance.account.list</field>
+        <field name="model">personal.finance.account</field>
+        <field name="arch" type="xml">
+            <list editable="top">
+                <field name="name"/>
+                <field name="bank_id"/>
+                <field name="account_type"/>
+                <field name="account_number"/>
+                <field name="balance"/>
+                <field name="balance_month"/>
+                <field name="balance_next_month"/>
+                <field name="balance_reconciled"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_personal_finance_account_form" model="ir.ui.view">
+        <field name="name">personal.finance.account.form</field>
+        <field name="model">personal.finance.account</field>
+        <field name="arch" type="xml">
+            <form string="Conta">
+                <group col="4">
+                    <field name="name"/>
+                    <field name="bank_id"/>
+                    <field name="account_type"/>
+                    <field name="account_number"/>
+                </group>
+                <group col="4" string="Conferência automática na importação de OFX (opcional)">
+                    <field name="ofx_bankid"/>
+                    <field name="ofx_acctid"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_personal_finance_accounts" model="ir.actions.act_window">
+        <field name="name">Contas</field>
+        <field name="res_model">personal.finance.account</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_personal_finance_category_rule_list" model="ir.ui.view">
+        <field name="name">personal.finance.category.rule.list</field>
+        <field name="model">personal.finance.category.rule</field>
+        <field name="arch" type="xml">
+            <list editable="top">
+                <field name="pattern"/>
+                <field name="category_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_personal_finance_category_rules" model="ir.actions.act_window">
+        <field name="name">Regras de Categorização</field>
+        <field name="res_model">personal.finance.category.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Clique para criar uma regra.
+            </p><p>
+                Toda vez que um lançamento novo (manual ou importado de OFX) tiver esse trecho de
+                texto na descrição, a categoria é aplicada automaticamente. Também são criadas
+                automaticamente ao salvar uma categorização com "Salvar como regra" preenchido.
+            </p>
+        </field>
+    </record>
+</odoo>

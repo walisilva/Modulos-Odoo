@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_personal_finance_bank_user,personal.finance.bank.user,model_personal_finance_bank,base.group_user,1,1,1,1
+access_personal_finance_payment_method_user,personal.finance.payment.method.user,model_personal_finance_payment_method,base.group_user,1,1,1,1
+access_personal_finance_card_user,personal.finance.card.user,model_personal_finance_card,base.group_user,1,1,1,1
+access_personal_finance_account_user,personal.finance.account.user,model_personal_finance_account,base.group_user,1,1,1,1
+access_personal_finance_category_user,personal.finance.category.user,model_personal_finance_category,base.group_user,1,1,1,1
+access_personal_finance_category_rule_user,personal.finance.category.rule.user,model_personal_finance_category_rule,base.group_user,1,1,1,1
+access_personal_finance_line_user,personal.finance.line.user,model_personal_finance_line,base.group_user,1,1,1,1
+access_personal_finance_balance_report_user,personal.finance.balance.report.user,model_personal_finance_balance_report,base.group_user,1,0,0,0
+access_personal_finance_ofx_import_wizard_user,personal.finance.ofx.import.wizard.user,model_personal_finance_ofx_import_wizard,base.group_user,1,1,1,1
+access_personal_finance_set_category_wizard_user,personal.finance.set.category.wizard.user,model_personal_finance_set_category_wizard,base.group_user,1,1,1,1
