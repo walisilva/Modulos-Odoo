@@ -88,6 +88,7 @@
         <field name="model">personal.finance.line</field>
         <field name="arch" type="xml">
             <graph string="Relatório de lançamentos" type="bar">
+                <field name="category_id"/>
                 <field name="date" interval="month"/>
                 <field name="amount" type="measure"/>
             </graph>
