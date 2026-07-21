@@ -19,6 +19,25 @@
         </field>
     </record>
 
+    <record id="view_personal_finance_line_list_uncategorized" model="ir.ui.view">
+        <field name="name">personal.finance.line.list.uncategorized</field>
+        <field name="model">personal.finance.line</field>
+        <field name="arch" type="xml">
+            <list decoration-info="state=='new'" decoration-muted="state=='cancelled'">
+                <field name="date"/>
+                <field name="description"/>
+                <field name="income" sum="Total entradas"/>
+                <field name="expense" sum="Total saídas"/>
+                <field name="account_id"/>
+                <field name="card_id"/>
+                <field name="payment_method_id"/>
+                <field name="state"/>
+                <field name="source"/>
+                <button name="action_open_categorize_wizard" type="object" string="Categorizar" class="btn-link"/>
+            </list>
+        </field>
+    </record>
+
     <record id="view_personal_finance_line_search" model="ir.ui.view">
         <field name="name">personal.finance.line.search</field>
         <field name="model">personal.finance.line</field>
@@ -30,6 +49,7 @@
                 <field name="card_id" string="Cartão"/>
                 <field name="payment_method_id" string="Forma de pagamento"/>
                 <filter string="Sem categoria" name="uncategorized" domain="[('category_id', '=', False)]"/>
+                <filter string="Sem Padrões de Importação" name="no_pattern" domain="[('has_pattern', '=', False)]"/>
                 <filter string="Este mês" name="thismonth"
                     domain="[('date','&lt;=',(context_today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('date','&gt;=',(context_today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]"
                     help="Lançamentos do mês atual"/>
@@ -50,6 +70,7 @@
         <field name="name">Não Categorizados</field>
         <field name="res_model">personal.finance.line</field>
         <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_personal_finance_line_list_uncategorized"/>
         <field name="domain">[('category_id', '=', False)]</field>
         <field name="search_view_id" ref="view_personal_finance_line_search"/>
     </record>
