@@ -15,6 +15,7 @@
                 <field name="payment_method_id"/>
                 <field name="state"/>
                 <field name="source"/>
+                <button name="action_open_categorize_wizard" type="object" string="Categorizar" class="btn-link"/>
             </list>
         </field>
     </record>
