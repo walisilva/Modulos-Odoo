@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_personal_finance_root" name="Finanças Pessoais" sequence="70"/>
+
+    <menuitem id="menu_personal_finance_lines" name="Lançamentos" parent="menu_personal_finance_root" sequence="1"/>
+    <menuitem id="menu_personal_finance_reporting" name="Relatórios" parent="menu_personal_finance_root" sequence="2"/>
+    <menuitem id="menu_personal_finance_configuration" name="Configuração" parent="menu_personal_finance_root" sequence="3"/>
+
+    <menuitem id="menu_personal_finance_lines_new" name="Lançamentos Recentes"
+        parent="menu_personal_finance_lines" action="action_personal_finance_lines_new" sequence="1"/>
+    <menuitem id="menu_personal_finance_lines_all" name="Todos os Lançamentos"
+        parent="menu_personal_finance_lines" action="action_personal_finance_lines_all" sequence="2"/>
+
+    <menuitem id="menu_personal_finance_accounts" name="Contas"
+        parent="menu_personal_finance_lines" action="action_personal_finance_accounts" sequence="3"/>
+
+    <menuitem id="menu_personal_finance_lines_report" name="Lançamentos por Categoria"
+        parent="menu_personal_finance_reporting" action="action_personal_finance_lines_report" sequence="1"/>
+    <menuitem id="menu_personal_finance_balance_report" name="Evolução do Saldo"
+        parent="menu_personal_finance_reporting" action="action_personal_finance_balance_report" sequence="2"/>
+
+    <menuitem id="menu_personal_finance_categories" name="Categorias"
+        parent="menu_personal_finance_configuration" action="action_personal_finance_categories" sequence="1"/>
+    <menuitem id="menu_personal_finance_import" name="Importar Lançamentos"
+        parent="menu_personal_finance_configuration" action="action_personal_finance_import_wizard" sequence="2"/>
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_personal_finance_category_form" model="ir.ui.view">
+        <field name="name">personal.finance.category.form</field>
+        <field name="model">personal.finance.category</field>
+        <field name="arch" type="xml">
+            <form string="Categoria">
+                <group col="4">
+                    <field name="name"/>
+                    <field name="active"/>
+                    <field name="parent_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_personal_finance_category_list" model="ir.ui.view">
+        <field name="name">personal.finance.category.list</field>
+        <field name="model">personal.finance.category</field>
+        <field eval="6" name="priority"/>
+        <field name="arch" type="xml">
+            <list string="Categorias">
+                <field name="complete_name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_personal_finance_category_tree" model="ir.ui.view">
+        <field name="name">personal.finance.category.tree</field>
+        <field name="model">personal.finance.category</field>
+        <field name="field_parent">child_ids</field>
+        <field name="arch" type="xml">
+            <list string="Categorias">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_personal_finance_categories" model="ir.actions.act_window">
+        <field name="name">Categorias</field>
+        <field name="res_model">personal.finance.category</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Clique para criar uma nova categoria.
+            </p><p>
+                Categorias ajudam a classificar os lançamentos para análise.
+                Uma categoria pode ter subcategorias (estrutura hierárquica).
+            </p>
+        </field>
+    </record>
+</odoo>
