@@ -30,6 +30,13 @@ class PersonalFinanceLine(models.Model):
         string='Origem', default='manual', readonly=True,
     )
     ofx_fitid = fields.Char(string='ID da transação (OFX)', readonly=True, copy=False)
+    has_pattern = fields.Boolean(
+        string='Tem padrão de importação', default=False, copy=False,
+        help='Marcado quando este lançamento foi categorizado por uma regra existente, ou quando '
+             'a categorização dele criou/atualizou uma regra ("Salvar como regra"). Fica desmarcado '
+             'quando a categoria foi definida direto, sem passar por uma regra — use o filtro '
+             '"Sem Padrões de Importação" para encontrar esses casos depois.',
+    )
 
     _sql_constraints = [
         (
@@ -60,4 +67,16 @@ class PersonalFinanceLine(models.Model):
             category = self.env['personal.finance.category.rule']._match(vals['description'])
             if category:
                 vals['category_id'] = category.id
+                vals['has_pattern'] = True
         return super().create(vals_list)
+
+    def action_open_categorize_wizard(self):
+        self.ensure_one()
+        return {
+            'name': 'Definir categoria',
+            'type': 'ir.actions.act_window',
+            'res_model': 'personal.finance.set.category.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'active_ids': self.ids, 'active_model': self._name},
+        }

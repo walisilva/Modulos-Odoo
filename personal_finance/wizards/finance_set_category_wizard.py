@@ -27,7 +27,9 @@ class PersonalFinanceSetCategoryWizard(models.TransientModel):
         self.ensure_one()
         active_ids = self.env.context.get('active_ids', [])
         lines = self.env['personal.finance.line'].browse(active_ids)
-        lines.write({'category_id': self.category_id.id})
+        vals = {'category_id': self.category_id.id}
         if self.rule_pattern:
             self.env['personal.finance.category.rule']._upsert(self.rule_pattern, self.category_id.id)
+            vals['has_pattern'] = True
+        lines.write(vals)
         return True
