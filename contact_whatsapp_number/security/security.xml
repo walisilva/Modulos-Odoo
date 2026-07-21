@@ -2,7 +2,6 @@
 <odoo>
     <record id="group_whatsapp_number_editor" model="res.groups">
         <field name="name">Pode editar número do WhatsApp</field>
-        <field name="category_id" ref="base.module_category_contacts"/>
         <field name="comment">Permite editar o campo "Número WhatsApp (bruto)" no contato. Sem esse grupo, o campo aparece só leitura.</field>
     </record>
 </odoo>
