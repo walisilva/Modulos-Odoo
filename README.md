@@ -80,10 +80,13 @@ zero para a API do Odoo 19 (não é port de módulo de versão antiga).
 - **Categorias** hierárquicas, com tipo (despesa/receita/neutro — "neutro"
   cobre transferência entre contas próprias/estorno, fica fora dos totais
   de despesa/receita nos relatórios).
+- **Lançamentos** com Entrada e Saída como campos separados (sempre
+  positivos, como um extrato bancário — sem sinal de menos), calculados
+  automaticamente na importação a partir do valor do extrato.
 - **Importação de extrato OFX**: `Lançamentos > Importar OFX`, escolhe a
   conta, sobe o arquivo. Deduplica automaticamente por FITID (não duplica
-  se reimportar um período sobreposto) e categoriza automaticamente por
-  regra de padrão de texto.
+  se reimportar um período sobreposto), separa entrada/saída automaticamente
+  e categoriza automaticamente por regra de padrão de texto.
 - **Regras de categorização** (`Cadastros > Regras de Categorização`):
   padrão de texto → categoria. Se mais de uma regra combinar com a
   descrição, vence a mais específica (padrão mais longo). Também são
@@ -91,9 +94,11 @@ zero para a API do Odoo 19 (não é port de módulo de versão antiga).
   tela "Não Categorizados" com a opção "Salvar como regra" preenchida —
   assim a próxima importação já reconhece.
 - **Relatórios**: uma única tela (`Relatórios > Relatórios`) alternando
-  entre sintético (tabela dinâmica por categoria/mês), gráfico (barra/
-  linha/pizza) e analítico (lista detalhada), usando os view switchers
-  nativos do Odoo. Mais um relatório de evolução de saldo por conta/mês.
+  entre sintético (tabela dinâmica por categoria/mês), gráfico (barra,
+  linha ou pizza — agrupado por categoria e mês, então dá pra ver tanto a
+  fatia de cada categoria no total quanto a evolução mês a mês) e analítico
+  (lista detalhada), usando os view switchers nativos do Odoo. Mais um
+  relatório de evolução de saldo por conta/mês.
 
 ### Requisitos
 
