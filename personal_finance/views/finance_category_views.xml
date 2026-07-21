@@ -25,17 +25,6 @@
         </field>
     </record>
 
-    <record id="view_personal_finance_category_tree" model="ir.ui.view">
-        <field name="name">personal.finance.category.tree</field>
-        <field name="model">personal.finance.category</field>
-        <field name="field_parent">child_ids</field>
-        <field name="arch" type="xml">
-            <list string="Categorias">
-                <field name="name"/>
-            </list>
-        </field>
-    </record>
-
     <record id="action_personal_finance_categories" model="ir.actions.act_window">
         <field name="name">Categorias</field>
         <field name="res_model">personal.finance.category</field>
