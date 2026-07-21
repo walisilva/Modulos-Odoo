@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_contact_whatsapp_number_wizard_form" model="ir.ui.view">
+        <field name="name">contact.whatsapp.number.wizard.form</field>
+        <field name="model">contact.whatsapp.number.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Editar número do WhatsApp">
+                <field name="partner_id" invisible="1"/>
+                <field name="whatsapp_number"/>
+                <footer>
+                    <button name="action_save" string="Salvar" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancelar" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Campo visível pra qualquer usuário com acesso a Contatos (sempre somente leitura aqui);
+         o botão de editar só aparece pra quem está no grupo "Pode editar número do WhatsApp". -->
+    <record id="view_partner_form_whatsapp_number" model="ir.ui.view">
+        <field name="name">res.partner.form.whatsapp.number</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='phone']" position="after">
+                <field name="whatsapp_number"/>
+                <button name="action_open_whatsapp_number_wizard" type="object"
+                    string="Editar número do WhatsApp" class="oe_link"
+                    groups="contact_whatsapp_number.group_whatsapp_number_editor"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -7,6 +7,7 @@ repositório, no formato padrão de addon Odoo.
 |---|---|
 | [`whatsapp_evolution/`](./whatsapp_evolution) | Envio de mensagens WhatsApp para contatos via [Evolution API](https://github.com/EvolutionAPI/evolution-api). |
 | [`personal_finance/`](./personal_finance) | Controle de despesas/receitas pessoais com importação de extrato OFX, categorização automática e relatórios. |
+| [`contact_whatsapp_number/`](./contact_whatsapp_number) | Campo com o número de WhatsApp "cru" do contato, para integrações automáticas (ex: n8n) casarem mensagens recebidas com o contato certo. |
 
 ---
 
@@ -141,6 +142,45 @@ zero para a API do Odoo 19 (não é port de módulo de versão antiga).
 - Importa um extrato OFX por vez, um arquivo = uma conta (não processa
   arquivos com mais de uma conta dentro).
 - Sem importação de fatura de cartão em PDF.
+
+### Licença
+
+LGPL-3
+
+---
+
+## contact_whatsapp_number
+
+Módulo pequeno e focado: adiciona um campo `whatsapp_number` em Contatos
+com o número de telefone exatamente como recebido de uma integração de
+WhatsApp (só dígitos, com código do país, ex: `5583991065820`) — usado
+por automações externas (ex: um workflow n8n recebendo webhook da
+Evolution API) para casar mensagens recebidas com o contato certo sem
+depender de normalizar o campo Telefone (que fica formatado bonito pra
+exibição, ex: `55 (83) 99106-5820`).
+
+### O que faz
+
+- Campo `whatsapp_number` visível na ficha do contato pra qualquer
+  usuário com acesso a Contatos, sempre **somente leitura**.
+- Botão "Editar número do WhatsApp" ao lado do campo, visível **só** pra
+  quem estiver no grupo "Pode editar número do WhatsApp" — abre um
+  formulário pequeno pra editar manualmente quando precisar (ex:
+  corrigir um casamento errado). Ninguém fora do grupo consegue editar
+  (nem pela ficha, nem por baixo — o acesso ao modelo do formulário de
+  edição também é restrito ao grupo).
+
+### Requisitos
+
+- Odoo 19
+
+### Instalação
+
+1. Copie a pasta `contact_whatsapp_number` para o addons path do seu Odoo.
+2. Em Ajustes > Apps, clique em "Atualizar lista de apps".
+3. Procure por "Número WhatsApp do Contato" e instale.
+4. Em Ajustes > Usuários e Empresas > Grupos, adicione os usuários que
+   podem editar o campo ao grupo "Pode editar número do WhatsApp".
 
 ### Licença
 
