@@ -10,6 +10,9 @@
                     <button name="action_create_instance" type="object"
                             string="Criar instância na Evolution" class="btn-primary"
                             invisible="state != 'draft'"/>
+                    <button name="action_connect_existing_instance" type="object"
+                            string="Conectar em instância já existente" class="btn-secondary"
+                            invisible="state != 'draft'"/>
                     <button name="action_refresh_qrcode" type="object"
                             string="Atualizar QR Code" class="btn-secondary"
                             invisible="state not in ('connecting', 'closed')"/>
@@ -29,6 +32,13 @@
                     <group>
                         <group>
                             <field name="name"/>
+                            <div invisible="state != 'draft'" class="text-muted mb-2">
+                                Se o número já está conectado na Evolution (pareado por fora
+                                do Odoo), digite aqui o nome exato da instância lá e clique em
+                                "Conectar em instância já existente" — não use "Criar instância"
+                                nesse caso, pois isso tenta criar uma instância nova com esse
+                                nome e dá conflito.
+                            </div>
                             <field name="config_id"/>
                             <field name="phone_number"/>
                             <field name="last_checked"/>
@@ -44,6 +54,29 @@
                             </div>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Automação de CRM">
+                            <group>
+                                <group string="Onde criar/mover as oportunidades">
+                                    <field name="crm_team_id"/>
+                                    <field name="crm_stage_novo_id"/>
+                                    <field name="crm_stage_andamento_id"/>
+                                    <field name="crm_stage_pedido_id"/>
+                                    <field name="crm_stage_concluido_id"/>
+                                </group>
+                                <group string="Padrões de texto e tempo">
+                                    <field name="crm_padrao_pedido"/>
+                                    <field name="crm_padrao_conclusao"/>
+                                    <field name="crm_reopen_hours"/>
+                                </group>
+                            </group>
+                            <div class="text-muted">
+                                Esses campos são lidos por um workflow externo (n8n) toda vez
+                                que chega mensagem nesta instância — editar aqui muda o
+                                comportamento do funil sem precisar mexer no workflow.
+                            </div>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

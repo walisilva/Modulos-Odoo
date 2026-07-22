@@ -38,6 +38,35 @@ class EvolutionInstance(models.Model):
     last_checked = fields.Datetime(string='Última verificação')
     active = fields.Boolean(default=True)
 
+    # Configuração do funil de CRM (lida via RPC pelo n8n, pra não deixar
+    # nada disso fixo no workflow — ver contextos/sessao_2026-07-21_*.md
+    # no repo Projetos-Locais-Geral pro desenho completo do pipeline).
+    crm_team_id = fields.Many2one(
+        'crm.team', string='Equipe de vendas (CRM)',
+        help="Equipe do CRM usada ao criar oportunidades automaticamente a partir de "
+             "mensagens recebidas por esta instância.",
+    )
+    crm_stage_novo_id = fields.Many2one('crm.stage', string='Estágio — Novo')
+    crm_stage_andamento_id = fields.Many2one('crm.stage', string='Estágio — Em Andamento')
+    crm_stage_pedido_id = fields.Many2one('crm.stage', string='Estágio — Pedido')
+    crm_stage_concluido_id = fields.Many2one('crm.stage', string='Estágio — Pedido Concluído')
+    crm_padrao_pedido = fields.Char(
+        string='Padrão de texto — Pedido', default='PEDIDO:',
+        help="Se uma mensagem enviada por mim contiver este texto enquanto o lead estiver em "
+             "'Em Andamento', ele avança automaticamente para 'Pedido'.",
+    )
+    crm_padrao_conclusao = fields.Char(
+        string='Padrão de texto — Pedido Concluído', default='Pedido concluído',
+        help="Se uma mensagem enviada por mim contiver este texto enquanto o lead estiver em "
+             "'Pedido', ele avança automaticamente para 'Pedido Concluído'.",
+    )
+    crm_reopen_hours = fields.Float(
+        string='Horas para reabrir cliente recorrente', default=1.0,
+        help="Se o lead mais recente de um cliente já estiver em 'Pedido Concluído' e ele "
+             "mandar mensagem de novo, só volta para 'Em Andamento' se já tiver passado esse "
+             "tempo desde a última atividade registrada nesse lead.",
+    )
+
     def _extract_qrcode_b64(self, data):
         """Tenta extrair o base64 do QR Code de diferentes formatos de resposta
         usados pela Evolution API conforme a versão."""
@@ -86,6 +115,44 @@ class EvolutionInstance(models.Model):
             # Algumas versões só devolvem o QR Code pela rota /instance/connect
             self.action_refresh_qrcode()
 
+        return self._reload_action()
+
+    def action_connect_existing_instance(self):
+        """Alternativa ao par via QR Code: adota uma instância que já existe e já
+        está conectada na Evolution API, só pelo nome exato — útil quando o
+        número já foi pareado por fora do Odoo (ex: direto na Evolution)."""
+        self.ensure_one()
+        if self.state != 'draft':
+            raise UserError(
+                'Esta instância já foi processada por aqui. Para reconectar uma instância '
+                'desconectada, use "Verificar status".'
+            )
+        if not self.name:
+            raise UserError(
+                'Informe o nome exato da instância já conectada na Evolution API antes de continuar.'
+            )
+        result = self.config_id._request(
+            'GET', f'/instance/fetchInstances?instanceName={self.name}',
+        )
+        if isinstance(result, list):
+            result = result[0] if result else {}
+        if not result:
+            raise UserError(
+                f"Nenhuma instância chamada '{self.name}' foi encontrada na Evolution API. "
+                "Confira se o nome está exatamente igual ao cadastrado lá."
+            )
+        raw_state = (result.get('connectionStatus') or '').lower()
+        state_map = {'open': 'open', 'connecting': 'connecting', 'close': 'closed', 'closed': 'closed'}
+        owner_jid = result.get('ownerJid') or ''
+        vals = {
+            'state': state_map.get(raw_state, 'closed'),
+            'last_checked': fields.Datetime.now(),
+        }
+        if result.get('token'):
+            vals['instance_api_key'] = result['token']
+        if owner_jid:
+            vals['phone_number'] = owner_jid.split('@')[0]
+        self.write(vals)
         return self._reload_action()
 
     def action_refresh_qrcode(self):
