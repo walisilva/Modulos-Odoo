@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="web.KanbanView" t-inherit-mode="extension">
+        <xpath expr="//t[@t-set-slot='control-panel-always-buttons']" position="inside">
+            <div t-if="props.resModel === 'crm.lead'" class="form-check form-check-inline ms-2">
+                <input type="checkbox" class="form-check-input" id="fp_crm_auto_refresh_checkbox"
+                       t-att-checked="fpAutoRefreshState.enabled"
+                       t-on-change="fpOnToggleAutoRefresh"/>
+                <label class="form-check-label" for="fp_crm_auto_refresh_checkbox">
+                    Atualizar a cada 30s
+                </label>
+            </div>
+        </xpath>
+    </t>
+</templates>

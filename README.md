@@ -8,6 +8,7 @@ repositório, no formato padrão de addon Odoo.
 | [`whatsapp_evolution/`](./whatsapp_evolution) | Envio de mensagens WhatsApp para contatos via [Evolution API](https://github.com/EvolutionAPI/evolution-api). |
 | [`personal_finance/`](./personal_finance) | Controle de despesas/receitas pessoais com importação de extrato OFX, categorização automática e relatórios. |
 | [`contact_whatsapp_number/`](./contact_whatsapp_number) | Campo com o número de WhatsApp "cru" do contato, para integrações automáticas (ex: n8n) casarem mensagens recebidas com o contato certo. |
+| [`crm_kanban_auto_refresh/`](./crm_kanban_auto_refresh) | Marcação opcional na tela do Pipeline do CRM que recarrega os dados automaticamente a cada 30 segundos, sem precisar de F5. |
 
 ---
 
@@ -201,6 +202,42 @@ exibição, ex: `55 (83) 99106-5820`).
 3. Procure por "Número WhatsApp do Contato" e instale.
 4. Em Ajustes > Usuários e Empresas > Grupos, adicione os usuários que
    podem editar o campo ao grupo "Pode editar número do WhatsApp".
+
+### Licença
+
+LGPL-3
+
+---
+
+## crm_kanban_auto_refresh
+
+### O que faz
+
+Adiciona uma marcação (checkbox) na tela do Pipeline do CRM (view Kanban
+de oportunidades, modelo `crm.lead`) — desmarcada por padrão. Quando
+marcada, a tela recarrega os dados automaticamente a cada 30 segundos
+(mesma chamada do botão de atualizar nativo do Odoo, não a página
+inteira), sem precisar apertar F5. A marcação não persiste entre
+recarregamentos manuais de página nem entre sessões — é reiniciada
+desmarcada a cada vez que a tela é aberta.
+
+Implementado via `patch()` no controller do Kanban do CRM
+(`crmKanbanView.Controller`, de `@crm/views/crm_kanban/crm_kanban_view`) e
+uma extensão do template `web.KanbanView` (escopada só pro modelo
+`crm.lead` via `t-if`, não afeta outras telas Kanban do Odoo).
+
+### Requisitos
+
+- Odoo 19
+- Módulo `crm` instalado
+
+### Instalação
+
+1. Copie a pasta `crm_kanban_auto_refresh` para o addons path do seu Odoo.
+2. Em Ajustes > Apps, clique em "Atualizar lista de apps".
+3. Procure por "CRM Kanban - Atualização Automática" e instale.
+4. Abra o Pipeline do CRM — a marcação aparece no topo da tela, ao lado
+   dos outros botões do cabeçalho.
 
 ### Licença
 
