@@ -20,9 +20,15 @@ mensagens para contatos direto do Odoo.
 
 - **Configuração**: cadastre a URL e a API Key da sua Evolution API pelo Odoo.
 - **Números**: crie e conecte instâncias de WhatsApp, com QR Code exibido na
-  tela.
+  tela — ou adote uma instância que já existe e já está conectada na
+  Evolution, só digitando o nome exato dela.
 - **Envio**: botão "Enviar WhatsApp" na ficha de qualquer contato, com
   histórico de todas as mensagens enviadas.
+- **Config do funil de CRM por instância**: cada número pode ter sua própria
+  equipe de vendas, mapeamento de estágios, padrões de texto (pedido/pedido
+  concluído) e janela de reabertura de cliente recorrente — pensado pra um
+  workflow externo (ex: n8n) ler esses parâmetros via RPC em vez de ter
+  esses dados fixos no workflow.
 
 ### Requisitos
 
@@ -45,21 +51,35 @@ registro com:
 
 ### Como usar
 
-1. **Conectar um número**: `WhatsApp > Números` > Criar > preencha o nome e
-   a configuração > "Criar instância na Evolution" > escaneie o QR Code que
-   aparece na tela com o WhatsApp do celular (Aparelhos conectados > Conectar
-   um aparelho) > "Verificar status" até aparecer "Conectado".
-2. **Enviar uma mensagem**: abra um contato com telefone preenchido, clique
+1. **Conectar um número novo (via QR Code)**: `WhatsApp > Números` > Criar >
+   preencha o nome e a configuração > "Criar instância na Evolution" >
+   escaneie o QR Code que aparece na tela com o WhatsApp do celular
+   (Aparelhos conectados > Conectar um aparelho) > "Verificar status" até
+   aparecer "Conectado".
+2. **Adotar um número que já está conectado na Evolution**: `WhatsApp >
+   Números` > Criar > preencha o nome **exatamente igual** ao nome da
+   instância já existente na Evolution API e a configuração >
+   "Conectar em instância já existente" — não usa QR Code nem cria nada na
+   Evolution, só verifica o status e importa o token/número já existentes.
+3. **Enviar uma mensagem**: abra um contato com telefone preenchido, clique
    em "Enviar WhatsApp", escolha o número e escreva a mensagem.
-3. **Ver histórico**: `WhatsApp > Mensagens Enviadas`.
+4. **Ver histórico**: `WhatsApp > Mensagens Enviadas`.
+5. **Configurar o funil de CRM de uma instância**: abra o número em
+   `WhatsApp > Números`, aba "Automação de CRM" — escolha a equipe e os 4
+   estágios do funil (Novo/Em Andamento/Pedido/Pedido Concluído), ajuste os
+   padrões de texto e a janela de reabertura. Um workflow externo (n8n) lê
+   esses campos via `search_read` em `evolution.instance` pelo `name` da
+   instância — editar aqui muda o comportamento do funil sem mexer no
+   workflow.
 
 ### Limitações conhecidas
 
 - Envio manual apenas (sem gatilho automático em fatura/pedido confirmado)
-- Sem recebimento de mensagens (webhook) — não processa respostas dos
-  clientes nem confirmações de entrega/leitura
-- O número de telefone da instância não é preenchido automaticamente após
-  conectar; pode editar manualmente no registro da instância
+- O módulo em si não processa mensagens recebidas (webhook) — isso é feito
+  por um workflow externo (n8n), que só *lê* a configuração daqui
+- O número de telefone da instância não é preenchido automaticamente ao
+  criar via QR Code (fica preenchido ao adotar uma instância existente);
+  pode editar manualmente no registro da instância
 
 ### Licença
 
