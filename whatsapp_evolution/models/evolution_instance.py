@@ -50,6 +50,12 @@ class EvolutionInstance(models.Model):
     crm_stage_andamento_id = fields.Many2one('crm.stage', string='Estágio — Em Andamento')
     crm_stage_pedido_id = fields.Many2one('crm.stage', string='Estágio — Pedido')
     crm_stage_concluido_id = fields.Many2one('crm.stage', string='Estágio — Pedido Concluído')
+    crm_stage_cancelado_id = fields.Many2one(
+        'crm.stage', string='Estágio — Cancelado',
+        help="Usado só pra saber quando um cliente recorrente deve ganhar um lead novo em "
+             "'Novo' (em vez de reabrir o lead antigo) — o estágio Cancelado em si continua "
+             "manual, sem automação de texto pra entrar nele.",
+    )
     crm_padrao_pedido = fields.Char(
         string='Padrão de texto — Pedido', default='PEDIDO:',
         help="Se uma mensagem enviada por mim contiver este texto enquanto o lead estiver em "

@@ -63,6 +63,7 @@
                                     <field name="crm_stage_andamento_id"/>
                                     <field name="crm_stage_pedido_id"/>
                                     <field name="crm_stage_concluido_id"/>
+                                    <field name="crm_stage_cancelado_id"/>
                                 </group>
                                 <group string="Padrões de texto e tempo">
                                     <field name="crm_padrao_pedido"/>
